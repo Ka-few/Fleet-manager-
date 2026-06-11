@@ -98,6 +98,16 @@ export const Dashboard: React.FC = () => {
                 </div>
                 <p className="text-lg font-bold">{kpis.inServiceVehicles}</p>
               </Card>
+
+              <Card>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="p-1.5 rounded bg-[var(--danger-light)] text-[var(--danger)]">
+                    <AlertCircle size={16} />
+                  </div>
+                  <h3 className="text-xs font-medium text-[var(--text-muted)]">Overdue Reminders</h3>
+                </div>
+                <p className="text-lg font-bold">{kpis.overdueReminders}</p>
+              </Card>
             </div>
 
             {/* Charts Section Placeholder */}

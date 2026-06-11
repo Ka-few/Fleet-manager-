@@ -16,11 +16,9 @@ import { FuelForm } from './pages/Fuel/FuelForm';
 import { MaintenanceList } from './pages/Maintenance/MaintenanceList';
 import { MaintenanceForm } from './pages/Maintenance/MaintenanceForm';
 import { MoreMenu } from './pages/More/MoreMenu';
-
-// Placeholder Pages (To be implemented)
-const Placeholder = ({ title }: { title: string }) => (
-  <div className="p-4"><h1 className="text-xl font-bold">{title}</h1><p className="mt-4 text-gray-400">Coming soon.</p></div>
-);
+import { ReminderList } from './pages/Reminders/ReminderList';
+import { ReportsPage } from './pages/Reports/ReportsPage';
+import { SettingsPage } from './pages/Settings/SettingsPage';
 
 function App() {
   return (
@@ -49,6 +47,10 @@ function App() {
           <Route path="/maintenance" element={<MaintenanceList />} />
           <Route path="/maintenance/add" element={<MaintenanceForm />} />
           <Route path="/maintenance/edit/:id" element={<MaintenanceForm />} />
+
+          <Route path="/reminders" element={<ReminderList />} />
+          <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           
           <Route path="/more" element={<MoreMenu />} />
         </Route>

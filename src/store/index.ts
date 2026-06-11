@@ -27,22 +27,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-
-export const store = configureStore({
-  reducer: {
-    vehicles: vehiclesReducer,
-    revenue: revenueReducer,
-    expenses: expensesReducer,
-    fuel: fuelReducer,
-    maintenance: maintenanceReducer,
-    dashboard: dashboardReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false, // Disabling because dates and other non-serializables might slip through
-    }),
-});
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

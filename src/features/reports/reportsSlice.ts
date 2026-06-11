@@ -3,6 +3,7 @@ import { ChartDataPoint, VehicleProfitability } from '../../types';
 import { revenueRepo } from '../../db/repositories/revenueRepo';
 import { expenseRepo } from '../../db/repositories/expenseRepo';
 import { vehicleRepo } from '../../db/repositories/vehicleRepo';
+import { maintenanceRepo } from '../../db/repositories/maintenanceRepo';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 
 export type ReportPeriod = '7d' | '30d' | '90d';
@@ -38,6 +39,7 @@ export const fetchReports = createAsyncThunk(
     const chartData: ChartDataPoint[] = [];
     const allRevenue = await revenueRepo.getAll();
     const allExpenses = await expenseRepo.getAll();
+    const allMaintenance = await maintenanceRepo.getAll();
 
     for (let i = days - 1; i >= 0; i--) {
       const date = subDays(new Date(), i);
@@ -53,11 +55,15 @@ export const fetchReports = createAsyncThunk(
         .filter(e => e.date >= startStr.split('T')[0] && e.date <= endStr.split('T')[0])
         .reduce((sum, e) => sum + e.amount, 0);
 
+      const maintenance = allMaintenance
+        .filter(m => m.date >= startStr.split('T')[0] && m.date <= endStr.split('T')[0])
+        .reduce((sum, m) => sum + (m.cost || 0), 0);
+
       chartData.push({
         date: period === '7d' ? format(date, 'EEE') : format(date, 'MMM d'),
         revenue,
-        expenses,
-        profit: revenue - expenses,
+        expenses: expenses + maintenance,
+        profit: revenue - expenses - maintenance,
       });
     }
 
@@ -71,12 +77,15 @@ export const fetchReports = createAsyncThunk(
         const vExpenses = allExpenses
           .filter(e => e.vehicle_id === vehicle.id)
           .reduce((sum, e) => sum + e.amount, 0);
+        const vMaintenance = allMaintenance
+          .filter(m => m.vehicle_id === vehicle.id)
+          .reduce((sum, m) => sum + (m.cost || 0), 0);
         return {
           vehicle_id: vehicle.id,
           vehicle,
           totalRevenue: vRevenue,
-          totalExpenses: vExpenses,
-          profit: vRevenue - vExpenses,
+          totalExpenses: vExpenses + vMaintenance,
+          profit: vRevenue - vExpenses - vMaintenance,
         };
       })
     );

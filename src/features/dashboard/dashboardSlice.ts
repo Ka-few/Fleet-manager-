@@ -3,6 +3,7 @@ import { DashboardKPIs } from '../../types';
 import { vehicleRepo } from '../../db/repositories/vehicleRepo';
 import { revenueRepo } from '../../db/repositories/revenueRepo';
 import { expenseRepo } from '../../db/repositories/expenseRepo';
+import { reminderRepo } from '../../db/repositories/reminderRepo';
 import { startOfDay, startOfWeek, startOfMonth, endOfDay, endOfWeek, endOfMonth } from 'date-fns';
 
 interface DashboardState {
@@ -49,7 +50,7 @@ export const fetchDashboardKPIs = createAsyncThunk('dashboard/fetchKPIs', async 
   const [
     todayRev, weekRev, monthRev,
     todayExp, weekExp, monthExp,
-    totalVehicles, activeVehicles, inServiceVehicles
+    totalVehicles, activeVehicles, inServiceVehicles, overdueReminders
   ] = await Promise.all([
     revenueRepo.getRevenueByDateRange(tStart, tEnd),
     revenueRepo.getRevenueByDateRange(wStart, wEnd),
@@ -59,7 +60,8 @@ export const fetchDashboardKPIs = createAsyncThunk('dashboard/fetchKPIs', async 
     expenseRepo.getExpensesByDateRange(mStart, mEnd),
     vehicleRepo.countAll(),
     vehicleRepo.countActive(),
-    vehicleRepo.countInService()
+    vehicleRepo.countInService(),
+    reminderRepo.countOverdue()
   ]);
 
   return {
@@ -73,8 +75,8 @@ export const fetchDashboardKPIs = createAsyncThunk('dashboard/fetchKPIs', async 
     totalVehicles,
     activeVehicles,
     inServiceVehicles,
-    monthFuelCost: 0, // Placeholder until fuel repo is built
-    overdueReminders: 0 // Placeholder until reminders repo is built
+    monthFuelCost: 0,
+    overdueReminders
   };
 });
 

@@ -124,6 +124,14 @@ export interface Reminder {
   vehicle?: Vehicle;
 }
 
+export interface AppSettings {
+  businessName: string;
+  defaultReminderDays: number;
+  currency: 'KES';
+  weekStartsOn: 'monday' | 'sunday';
+  enableInAppReminderBadges: boolean;
+}
+
 // Dashboard KPI types
 export interface DashboardKPIs {
   todayRevenue: number;

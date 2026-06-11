@@ -24,19 +24,19 @@ export const MoreMenu: React.FC = () => {
       title: 'Reminders',
       description: 'Insurance, inspection, licenses',
       icon: <Bell size={24} className="text-[var(--danger)]" />,
-      onClick: () => alert('Reminders module coming soon!'), // Placeholder for next phase
+      onClick: () => navigate('/reminders'),
     },
     {
       title: 'Reports & Analytics',
       description: 'Deep dive into your profit margins',
       icon: <BarChart3 size={24} className="text-purple-400" />,
-      onClick: () => alert('Reports module coming soon!'), // Placeholder for next phase
+      onClick: () => navigate('/reports'),
     },
     {
       title: 'Settings',
       description: 'App preferences and data backup',
       icon: <Settings size={24} className="text-[var(--text-muted)]" />,
-      onClick: () => alert('Settings module coming soon!'),
+      onClick: () => navigate('/settings'),
     },
   ];
 

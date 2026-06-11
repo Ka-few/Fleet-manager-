@@ -126,6 +126,7 @@ export const MaintenanceForm: React.FC = () => {
               { value: 'brakes', label: 'Brakes' },
               { value: 'engine', label: 'Engine Repair' },
               { value: 'suspension', label: 'Suspension' },
+              { value: 'insurance', label: 'Insurance' },
               { value: 'inspection', label: 'NTSA Inspection' },
               { value: 'other', label: 'Other' },
             ]}
